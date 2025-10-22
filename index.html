@@ -1,6 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Splash Screen Styles -->
+    <style>
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .splash-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .splash-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2563eb;
+            margin-top: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .splash-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Hide scrollbar during splash screen */
+        body.splash-active {
+            overflow: hidden;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Tri-Axis - Developers of TriConnect System">
@@ -254,5 +312,31 @@
     </footer>
 
     <script src="script.js"></script>
+    <!-- Splash Screen HTML -->
+    <div id="splash-screen">
+        <img src="images/tri_axis.png" alt="Tri-Axis Logo" class="splash-logo">
+        <div class="splash-text">Tri-Axis</div>
+        <div class="splash-spinner"></div>
+    </div>
+
+    <script>
+        // Add splash-active class to body
+        document.body.classList.add('splash-active');
+        
+        // Hide splash screen after page loads
+        window.addEventListener('load', function() {
+            // Minimum display time for splash screen (2 seconds)
+            setTimeout(function() {
+                const splashScreen = document.getElementById('splash-screen');
+                splashScreen.style.opacity = '0';
+                document.body.classList.remove('splash-active');
+                
+                // Remove splash screen from DOM after fade out
+                setTimeout(function() {
+                    splashScreen.style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
